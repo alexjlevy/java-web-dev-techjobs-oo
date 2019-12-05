@@ -28,6 +28,7 @@ public void testSettingJobId(){
 }
 @Test
 public void testJobContructorSetsAllFields(){
+    assertEquals("Product tester", fancyTestJob.getName());
     assertEquals("ACME", fancyTestJob.getEmployer().getValue());
     assertTrue(fancyTestJob.getEmployer() instanceof Employer);
 }
