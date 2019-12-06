@@ -16,6 +16,9 @@ Job testJob;
 Job otherTestJob;
 Job fancyTestJob;
 Job almostSameJob;
+Job missingStuffJob;
+String testString;
+String emptyTestString;
 
 @Before
 public void createTestJob(){
@@ -23,6 +26,10 @@ public void createTestJob(){
     otherTestJob = new Job();
     fancyTestJob = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType ("Quality Control"), new CoreCompetency("Persistence"));
     almostSameJob = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType ("Quality Control"), new CoreCompetency("Persistence"));
+    missingStuffJob = new Job("", new Employer("ACME"), new Location("Desert"), new PositionType ("Quality Control"), new CoreCompetency("Persistence"));
+    testString = fancyTestJob.toString();
+    emptyTestString = missingStuffJob.toString();
+
 }
 @Test
 public void testSettingJobId(){
@@ -45,5 +52,22 @@ public void testJobContructorSetsAllFields(){
 public void testJobsForEquality(){
     assertFalse(fancyTestJob.equals(almostSameJob));
 }
-
+@Test
+public void testToStringForBlankLines(){
+    assertTrue(testString.startsWith("\n"));
+    assertTrue(testString.endsWith("\n"));
+}
+@Test
+public void testToStringLabelsAndData(){
+    assertTrue(testString.contains("ID: "));
+    assertTrue(testString.contains("Name: "));
+    assertTrue(testString.contains("Employer: "));
+    assertTrue(testString.contains("Location: "));
+    assertTrue(testString.contains("Position Type: "));
+    assertTrue(testString.contains("Core Competency: "));
+}
+@Test
+public void testToStringModifiesEmptyField(){
+    assertTrue(emptyTestString.toString().contains("Data not available"));
+}
 }
